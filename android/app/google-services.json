@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1015892615150",
+    "project_id": "movie-rec-app-edff3",
+    "storage_bucket": "movie-rec-app-edff3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015892615150:android:73edb2c0b7cb69fa4bf8ff",
+        "android_client_info": {
+          "package_name": "com.TothRidi.movie_recommendation_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015892615150-qv19betjr7u0ga7i1259fttanauk9mig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ceef-KVCsxdyuSn5kcdA-KlaYIe0HgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015892615150-qv19betjr7u0ga7i1259fttanauk9mig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
