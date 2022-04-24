@@ -38,6 +38,7 @@ dependencies:
   firebase_auth: ^3.3.15
   firebase_core: ^1.15.0
   cloud_firestore: ^3.1.13
+  tmdb_api: ^2.1.0
 
 dev_dependencies:
   flutter_test:
