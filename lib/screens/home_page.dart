@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/widgets/my_navbar.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
+import 'package:movie_recommendation_app/widgets/trending.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,8 +40,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home Screen"),
       ),
-      body: const Center(
-        child: Text('Show trending movies here!'),
+      body: ListView(
+        children: [
+          TrendingMovies(trending: trendingMovies),
+        ],
       ),
       bottomNavigationBar: const MyNavBar(),
     );
