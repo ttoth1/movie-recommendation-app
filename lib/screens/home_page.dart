@@ -11,27 +11,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home Screen"),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              // Within the `FirstScreen` widget
-              onPressed: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, '/search');
-              },
-              child: const Text('Search screen'),
-            ),
-            ElevatedButton(
-              // Within the `FirstScreen` widget
-              onPressed: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, '/saved');
-              },
-              child: const Text('Saved screen'),
-            ),
-          ],
-        ),
+      body: const Center(
+        child: Text('Show trending movies here!'),
       ),
       bottomNavigationBar: const MyNavBar(),
     );
