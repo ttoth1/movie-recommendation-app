@@ -1,7 +1,10 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
 import 'package:movie_recommendation_app/widgets/actors.dart';
 import 'package:movie_recommendation_app/widgets/director.dart';
+import 'package:movie_recommendation_app/widgets/writers.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class Description extends StatefulWidget {
@@ -26,6 +29,8 @@ class _DescriptionState extends State<Description> {
   List cast = [];
   List crew = [];
   late int directorID;
+  late LinkedHashMap director;
+  List writers = [];
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
 
@@ -51,11 +56,18 @@ class _DescriptionState extends State<Description> {
           // print('movie director ID ' + item['id'].toString());
           // print("id type is ${item['id'].runtimeType}");
           // print("item name type is ${item['name'].runtimeType}");
-          // print(item);
-          // print("item type is ${item.runtimeType}");
+          print(item);
+          print("item type is ${item.runtimeType}");
+          director = item;
+          print("director type is ${director.runtimeType}");
+        } else if ((item['department'] == 'Writing') &&
+            !writers.contains(item['id'])) {
+          print('writer is ${item['name']} with id ${item['id']}');
+          writers.add(item);
         }
       }
     });
+    print("writers: $writers");
     // print(crew);
   }
 
@@ -114,7 +126,11 @@ class _DescriptionState extends State<Description> {
           Actors(actors: cast),
           // Text("Director: Coming soon"),
           // Text(" Director id: " + directorID.toString()),
-          Director(directorID: directorID)
+          Director(
+            directorID: directorID,
+            director: director,
+          ),
+          Writers(writers: writers),
         ],
       ),
     );

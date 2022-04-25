@@ -25,6 +25,7 @@ class Actors extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    print('${actors[index]['name']} clicked');
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
