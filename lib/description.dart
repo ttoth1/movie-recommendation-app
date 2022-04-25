@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
 import 'package:movie_recommendation_app/widgets/actors.dart';
+import 'package:movie_recommendation_app/widgets/director.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class Description extends StatefulWidget {
@@ -23,6 +24,8 @@ class Description extends StatefulWidget {
 
 class _DescriptionState extends State<Description> {
   List cast = [];
+  List crew = [];
+  late int directorID;
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
 
@@ -35,12 +38,25 @@ class _DescriptionState extends State<Description> {
   loadCast() async {
     TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
         logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
-    Map castResult = await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
+    Map creditsResult =
+        await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
     setState(() {
-      cast = castResult['cast'];
+      cast = creditsResult['cast'];
+      crew = creditsResult['crew'];
+      // print("cast type is ${cast.runtimeType}");
+      for (var item in crew) {
+        if (item['job'] == 'Director') {
+          directorID = item['id'];
+          // print('movie director is ' + item['name']);
+          // print('movie director ID ' + item['id'].toString());
+          // print("id type is ${item['id'].runtimeType}");
+          // print("item name type is ${item['name'].runtimeType}");
+          // print(item);
+          // print("item type is ${item.runtimeType}");
+        }
+      }
     });
-    // print(cast);
-    // print(cast[0]);
+    // print(crew);
   }
 
   @override
@@ -95,8 +111,10 @@ class _DescriptionState extends State<Description> {
             ],
           ),
           Text(" Movie id: " + widget.id.toString()),
-          Text("Actors: Coming soon"),
           Actors(actors: cast),
+          // Text("Director: Coming soon"),
+          // Text(" Director id: " + directorID.toString()),
+          Director(directorID: directorID)
         ],
       ),
     );
