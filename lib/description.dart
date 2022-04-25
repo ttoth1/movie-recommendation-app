@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
+import 'package:movie_recommendation_app/widgets/actors.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 import 'package:movie_recommendation_app/widgets/trending.dart';
 
@@ -22,7 +23,7 @@ class Description extends StatefulWidget {
 }
 
 class _DescriptionState extends State<Description> {
-  List actors = [];
+  List cast = [];
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
   List actorsList = [];
@@ -38,12 +39,13 @@ class _DescriptionState extends State<Description> {
     Map movieResult = await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
     setState(() {
       print('actors below');
-      actors = movieResult['cast'];
-      for (var item in actors) {
-        actorsList.add(item['name']);
-      }
+      cast = movieResult['cast'];
+      // print(cast[0]['name']);
+      // for (var item in cast) {
+      //   actorsList.add(item['name']);
+      // }
     });
-    print(actorsList);
+    // print(actorsList);
     // print(actors[0]['name']);
   }
 
@@ -98,9 +100,10 @@ class _DescriptionState extends State<Description> {
               Flexible(child: Text(widget.description)),
             ],
           ),
-          Text("Actors:"),
-          Text(actorsList.toString()),
-          Text("movie id: " + widget.id.toString()),
+          // Text("Actors:"),
+          // Text(actorsList.toString()),
+          Text(" Movie id: " + widget.id.toString()),
+          Actors(actors: cast),
         ],
       ),
     );
