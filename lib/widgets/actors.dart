@@ -21,7 +21,7 @@ class Actors extends StatelessWidget {
             height: 270,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: actors.length,
+              itemCount: actors.length.clamp(0, 6),
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -41,6 +41,7 @@ class Actors extends StatelessWidget {
                           ),
                         ),
                         Text(actors[index]['name']),
+                        Text(actors[index]['character']),
                         Text('Actor id: ${actors[index]['id']}'),
                       ],
                     ),

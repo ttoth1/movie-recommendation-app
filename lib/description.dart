@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
 import 'package:movie_recommendation_app/widgets/actors.dart';
 import 'package:tmdb_api/tmdb_api.dart';
-import 'package:movie_recommendation_app/widgets/trending.dart';
 
 class Description extends StatefulWidget {
   final String name, description, bannerURL, posterURL, vote, launchOn;
@@ -26,27 +25,22 @@ class _DescriptionState extends State<Description> {
   List cast = [];
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
-  List actorsList = [];
+
   @override
   void initState() {
-    loadMovieInfo();
+    loadCast();
     super.initState();
   }
 
-  loadMovieInfo() async {
+  loadCast() async {
     TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
         logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
-    Map movieResult = await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
+    Map castResult = await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
     setState(() {
-      print('actors below');
-      cast = movieResult['cast'];
-      // print(cast[0]['name']);
-      // for (var item in cast) {
-      //   actorsList.add(item['name']);
-      // }
+      cast = castResult['cast'];
     });
-    // print(actorsList);
-    // print(actors[0]['name']);
+    // print(cast);
+    // print(cast[0]);
   }
 
   @override
@@ -100,9 +94,8 @@ class _DescriptionState extends State<Description> {
               Flexible(child: Text(widget.description)),
             ],
           ),
-          // Text("Actors:"),
-          // Text(actorsList.toString()),
           Text(" Movie id: " + widget.id.toString()),
+          Text("Actors: Coming soon"),
           Actors(actors: cast),
         ],
       ),
