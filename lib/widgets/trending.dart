@@ -37,6 +37,7 @@ class TrendingMovies extends StatelessWidget {
                                   vote: trending[index]['vote_average']
                                       .toString(),
                                   launchOn: trending[index]['release_date'],
+                                  id: trending[index]['id'],
                                 )));
                   },
                   child: SizedBox(
