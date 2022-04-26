@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_recommendation_app/description.dart';
+// import 'package:movie_recommendation_app/description.dart';
+import 'package:movie_recommendation_app/widgets/display_movie_info.dart';
 
 class TrendingMovies extends StatelessWidget {
   final List trending;
@@ -27,18 +28,8 @@ class TrendingMovies extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Description(
-                                  name: trending[index]['title'],
-                                  bannerURL: imageBaseURL +
-                                      trending[index]['backdrop_path'],
-                                  posterURL: imageBaseURL +
-                                      trending[index]['poster_path'],
-                                  description: trending[index]['overview'],
-                                  vote: trending[index]['vote_average']
-                                      .toString(),
-                                  launchOn: trending[index]['release_date'],
-                                  id: trending[index]['id'],
-                                )));
+                            builder: (context) => DisplayMovieInfo(
+                                movieID: trending[index]['id'])));
                   },
                   child: SizedBox(
                     width: 140,

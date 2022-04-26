@@ -18,7 +18,7 @@ class Actors extends StatelessWidget {
             height: 10,
           ),
           SizedBox(
-            height: 270,
+            height: 300,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: actors.length.clamp(0, 6),
@@ -26,8 +26,8 @@ class Actors extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     print('${actors[index]['name']} clicked');
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   child: SizedBox(
                     width: 140,
