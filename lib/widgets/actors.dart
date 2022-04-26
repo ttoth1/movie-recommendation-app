@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:movie_recommendation_app/description.dart';
-import 'package:movie_recommendation_app/widgets/display_movie_info.dart';
+import 'package:movie_recommendation_app/description.dart';
+import 'package:movie_recommendation_app/screens/home_page.dart';
+import 'package:movie_recommendation_app/screens/profile_page.dart';
 
-class TrendingMovies extends StatelessWidget {
-  final List trending;
+class Actors extends StatelessWidget {
+  final List actors;
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
-  const TrendingMovies({Key? key, required this.trending}) : super(key: key);
+  const Actors({Key? key, required this.actors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,23 +14,27 @@ class TrendingMovies extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Text('Trending Movies'),
+          const Text('Actors'),
           const SizedBox(
             height: 10,
           ),
           SizedBox(
-            height: 270,
+            height: 300,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: trending.length,
+              itemCount: actors.length.clamp(0, 6),
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    print('${actors[index]['name']} clicked');
+                    print('${actors[index]['id']} clicked');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DisplayMovieInfo(
-                                movieID: trending[index]['id'])));
+                            builder: (context) => ProfilePage(
+                                  personID: actors[index]['id'],
+                                  personName: actors[index]['name'],
+                                )));
                   },
                   child: SizedBox(
                     width: 140,
@@ -40,10 +45,12 @@ class TrendingMovies extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(imageBaseURL +
-                                    trending[index]['poster_path'])),
+                                    actors[index]['profile_path'])),
                           ),
                         ),
-                        Text(trending[index]['title'])
+                        Text(actors[index]['name']),
+                        Text(actors[index]['character']),
+                        Text('Actor id: ${actors[index]['id']}'),
                       ],
                     ),
                   ),

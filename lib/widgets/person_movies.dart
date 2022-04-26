@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 // import 'package:movie_recommendation_app/description.dart';
 import 'package:movie_recommendation_app/widgets/display_movie_info.dart';
 
-class TrendingMovies extends StatelessWidget {
-  final List trending;
+class PersonMovies extends StatelessWidget {
+  final List movies;
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
-  const TrendingMovies({Key? key, required this.trending}) : super(key: key);
+  const PersonMovies({Key? key, required this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class TrendingMovies extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Text('Trending Movies'),
+          const Text('Movies'),
           const SizedBox(
             height: 10,
           ),
@@ -21,7 +21,7 @@ class TrendingMovies extends StatelessWidget {
             height: 270,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: trending.length,
+              itemCount: movies.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -29,7 +29,7 @@ class TrendingMovies extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DisplayMovieInfo(
-                                movieID: trending[index]['id'])));
+                                movieID: movies[index]['id'])));
                   },
                   child: SizedBox(
                     width: 140,
@@ -40,10 +40,10 @@ class TrendingMovies extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(imageBaseURL +
-                                    trending[index]['poster_path'])),
+                                    movies[index]['poster_path'])),
                           ),
                         ),
-                        Text(trending[index]['title'])
+                        Text(movies[index]['title'])
                       ],
                     ),
                   ),

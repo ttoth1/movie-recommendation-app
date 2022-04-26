@@ -7,44 +7,62 @@ import 'package:movie_recommendation_app/widgets/director.dart';
 import 'package:movie_recommendation_app/widgets/writers.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
-class Description extends StatefulWidget {
-  final String name, description, bannerURL, posterURL, vote, launchOn;
-  final int id;
-  const Description(
-      {Key? key,
-      required this.name,
-      required this.description,
-      required this.bannerURL,
-      required this.posterURL,
-      required this.vote,
-      required this.launchOn,
-      required this.id})
-      : super(key: key);
+class DisplayMovieInfo extends StatefulWidget {
+  final int movieID;
+  const DisplayMovieInfo({Key? key, required this.movieID}) : super(key: key);
 
   @override
-  State<Description> createState() => _DescriptionState();
+  State<DisplayMovieInfo> createState() => _DisplayMovieInfoState();
 }
 
-class _DescriptionState extends State<Description> {
-  List cast = [];
-  List crew = [];
-  late int directorID;
-  late LinkedHashMap director;
-  List writers = [];
+class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
+  List movieDetails = [];
+  List cast = [];
+  List crew = [];
+  late int directorID = 0;
+  late LinkedHashMap director = {'': 0, 'a': 0} as LinkedHashMap;
+  List writers = [];
+  final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
+
+  late String name = '',
+      description = '',
+      bannerURL = '',
+      posterURL = '',
+      vote = '',
+      launchOn = '';
 
   @override
   void initState() {
+    loadDetails();
     loadCast();
     super.initState();
+  }
+
+  loadDetails() async {
+    TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
+        logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
+    Map detailsResult =
+        await tmdbWithCustomLogs.v3.movies.getDetails(widget.movieID);
+    setState(() {
+      name = detailsResult['title'];
+      description = detailsResult['overview'];
+      bannerURL = imageBaseURL + detailsResult['backdrop_path'];
+      posterURL = imageBaseURL + detailsResult['poster_path'];
+      vote = detailsResult['vote_average'].toString();
+      launchOn = detailsResult['release_date'];
+    });
+    // print("detailsResult");
+    // print(detailsResult);
+    // print(name);
   }
 
   loadCast() async {
     TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
         logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
     Map creditsResult =
-        await tmdbWithCustomLogs.v3.movies.getCredits(widget.id);
+        await tmdbWithCustomLogs.v3.movies.getCredits(widget.movieID);
     setState(() {
       cast = creditsResult['cast'];
       crew = creditsResult['crew'];
@@ -68,7 +86,6 @@ class _DescriptionState extends State<Description> {
       }
     });
     print("writers: $writers");
-    // print(crew);
   }
 
   @override
@@ -76,7 +93,7 @@ class _DescriptionState extends State<Description> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text(name),
       ),
       body: ListView(
         children: [
@@ -89,7 +106,7 @@ class _DescriptionState extends State<Description> {
                     height: 250,
                     width: MediaQuery.of(context).size.width,
                     child: Image.network(
-                      widget.bannerURL,
+                      bannerURL,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -97,7 +114,7 @@ class _DescriptionState extends State<Description> {
                 Positioned(
                   bottom: 10,
                   child: Text(
-                    ' Average Rating - ' + widget.vote + ' ⭐',
+                    ' Average Rating - ' + vote + ' ⭐',
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
@@ -109,7 +126,7 @@ class _DescriptionState extends State<Description> {
           ),
           Container(
             padding: EdgeInsets.only(left: 10),
-            child: Text('Release date: ' + widget.launchOn),
+            child: Text('Release date: ' + launchOn),
           ),
           Row(
             children: [
@@ -117,15 +134,13 @@ class _DescriptionState extends State<Description> {
                 margin: EdgeInsets.all(5),
                 height: 200,
                 width: 100,
-                child: Image.network(widget.posterURL),
+                child: Image.network(posterURL),
               ),
-              Flexible(child: Text(widget.description)),
+              Flexible(child: Text(description)),
             ],
           ),
-          Text(" Movie id: " + widget.id.toString()),
+          Text(" Movie id: " + widget.movieID.toString()),
           Actors(actors: cast),
-          // Text("Director: Coming soon"),
-          // Text(" Director id: " + directorID.toString()),
           Director(
             directorID: directorID,
             director: director,
