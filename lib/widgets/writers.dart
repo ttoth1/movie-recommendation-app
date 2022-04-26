@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/screens/home_page.dart';
+import 'package:movie_recommendation_app/screens/profile_page.dart';
 
 class Writers extends StatelessWidget {
   final List writers;
@@ -25,8 +26,14 @@ class Writers extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     print('${writers[index]['name']} clicked');
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => HomePage()));
+                    print('${writers[index]['id']} clicked');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilePage(
+                                  personID: writers[index]['id'],
+                                  personName: writers[index]['name'],
+                                )));
                   },
                   child: SizedBox(
                     width: 140,

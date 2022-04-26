@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movie_recommendation_app/description.dart';
-import 'package:movie_recommendation_app/screens/home_page.dart';
-import 'package:movie_recommendation_app/screens/profile_page.dart';
+// import 'package:movie_recommendation_app/description.dart';
+import 'package:movie_recommendation_app/widgets/display_movie_info.dart';
 
-class Actors extends StatelessWidget {
-  final List actors;
+class PersonMovies extends StatelessWidget {
+  final List movies;
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
-  const Actors({Key? key, required this.actors}) : super(key: key);
+  const PersonMovies({Key? key, required this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,27 +13,23 @@ class Actors extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Text('Actors'),
+          const Text('Movies'),
           const SizedBox(
             height: 10,
           ),
           SizedBox(
-            height: 300,
+            height: 270,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: actors.length.clamp(0, 6),
+              itemCount: movies.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    print('${actors[index]['name']} clicked');
-                    print('${actors[index]['id']} clicked');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfilePage(
-                                  personID: actors[index]['id'],
-                                  personName: actors[index]['name'],
-                                )));
+                            builder: (context) => DisplayMovieInfo(
+                                movieID: movies[index]['id'])));
                   },
                   child: SizedBox(
                     width: 140,
@@ -45,12 +40,10 @@ class Actors extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(imageBaseURL +
-                                    actors[index]['profile_path'])),
+                                    movies[index]['poster_path'])),
                           ),
                         ),
-                        Text(actors[index]['name']),
-                        Text(actors[index]['character']),
-                        Text('Actor id: ${actors[index]['id']}'),
+                        Text(movies[index]['title'])
                       ],
                     ),
                   ),

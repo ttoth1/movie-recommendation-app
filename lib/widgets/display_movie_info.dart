@@ -21,12 +21,17 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
   List movieDetails = [];
   List cast = [];
   List crew = [];
-  late int directorID;
-  late LinkedHashMap director;
+  late int directorID = 0;
+  late LinkedHashMap director = {'': 0, 'a': 0} as LinkedHashMap;
   List writers = [];
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
 
-  late String name, description, bannerURL, posterURL, vote, launchOn;
+  late String name = '',
+      description = '',
+      bannerURL = '',
+      posterURL = '',
+      vote = '',
+      launchOn = '';
 
   @override
   void initState() {

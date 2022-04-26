@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:movie_recommendation_app/screens/profile_page.dart';
 
 class Director extends StatelessWidget {
   final int directorID;
@@ -22,8 +23,14 @@ class Director extends StatelessWidget {
           InkWell(
             onTap: () {
               print('${director['name']} clicked');
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (context) => HomePage()));
+              print('${director['id']} clicked');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                            personID: director['id'],
+                            personName: director['name'],
+                          )));
             },
             child: SizedBox(
               width: 140,

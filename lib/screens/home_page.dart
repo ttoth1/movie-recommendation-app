@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       trendingMovies = trendingResult['results'];
     });
+    print('trending');
     print(trendingMovies);
   }
 
