@@ -24,6 +24,7 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
   late int directorID = 0;
   late LinkedHashMap director = {'': 0, 'a': 0} as LinkedHashMap;
   List writers = [];
+  List writerIDs = [];
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
 
   late String name = '',
@@ -70,22 +71,49 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
       for (var item in crew) {
         if (item['job'] == 'Director') {
           directorID = item['id'];
-          // print('movie director is ' + item['name']);
-          // print('movie director ID ' + item['id'].toString());
+          print('movie director is ' + item['name']);
+          print('movie director ID ' + item['id'].toString());
           // print("id type is ${item['id'].runtimeType}");
           // print("item name type is ${item['name'].runtimeType}");
-          print(item);
-          print("item type is ${item.runtimeType}");
+          // print(item);
+          // print("item type is ${item.runtimeType}");
           director = item;
-          print("director type is ${director.runtimeType}");
+          // print("director type is ${director.runtimeType}");
+
+          // } else if ((item['department'] == 'Writing') &&
+          //     !writers.contains(item['id'])) {
+
         } else if ((item['department'] == 'Writing') &&
-            !writers.contains(item['id'])) {
+            (!writerIDs.contains(item['id']))) {
+          print('item is $item');
+          print(item.runtimeType);
+          print('item id is ${item['id']}');
+          print(item['id'].runtimeType);
+
+          print('Item keys: ${item.keys}');
+          print('Item values: ${item.values}');
+
+          print(
+              'Item values contains id 1223895: ${item.values.contains(1223895)}');
+
           print('writer is ${item['name']} with id ${item['id']}');
+          print(
+              'writerIDs already contains ${item['id']}? ${writerIDs.contains(item['id'])}');
+          if (writerIDs.contains(item['id'])) {
+            print('writerID already added');
+          }
+          // print(
+          //     'writers already contains this name? ${writers.contains(item)}');
           writers.add(item);
+          print('writer ${item['name']} added');
+          writerIDs.add(item['id']);
+          print('writerID ${item['id']} added');
+          print('writerIDs: $writerIDs');
         }
+        // print('writers is now: $writers');
       }
     });
-    print("writers: $writers");
+    print("complete writers: $writers");
   }
 
   @override

@@ -27,9 +27,11 @@ class _HomePageState extends State<HomePage> {
         logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
     Map trendingResult = await tmdbWithCustomLogs.v3.trending
         .getTrending(mediaType: MediaType.movie);
-    setState(() {
-      trendingMovies = trendingResult['results'];
-    });
+    if (mounted) {
+      setState(() {
+        trendingMovies = trendingResult['results'];
+      });
+    }
     print('trending');
     print(trendingMovies);
   }
