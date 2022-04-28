@@ -22,7 +22,8 @@ class Actors extends StatelessWidget {
             height: 300,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: actors.length.clamp(0, 6),
+              // itemCount: actors.length.clamp(0, 6),
+              itemCount: actors.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -40,14 +41,19 @@ class Actors extends StatelessWidget {
                     width: 140,
                     child: Column(
                       children: [
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(imageBaseURL +
-                                    actors[index]['profile_path'])),
-                          ),
-                        ),
+                        actors[index]['profile_path'] != null
+                            ? Container(
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(imageBaseURL +
+                                          actors[index]['profile_path'])),
+                                ),
+                              )
+                            : Container(
+                                height: 200,
+                                child: const Text("No photo available"),
+                              ),
                         Text(actors[index]['name']),
                         Text(actors[index]['character']),
                         Text('Actor id: ${actors[index]['id']}'),

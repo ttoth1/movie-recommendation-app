@@ -35,6 +35,10 @@ class _ProfilePageState extends State<ProfilePage> {
       print("credits result");
       print(creditsResult);
       personMovies = creditsResult['cast'];
+      print('Titles:');
+      for (var item in personMovies) {
+        print(item['title']);
+      }
       // name = detailsResult['title'];
       // description = detailsResult['overview'];
       // bannerURL = imageBaseURL + detailsResult['backdrop_path'];

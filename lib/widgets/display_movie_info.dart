@@ -49,7 +49,12 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
     setState(() {
       name = detailsResult['title'];
       description = detailsResult['overview'];
-      bannerURL = imageBaseURL + detailsResult['backdrop_path'];
+      if (detailsResult['backdrop_path'] != null) {
+        bannerURL = imageBaseURL + detailsResult['backdrop_path'];
+      } else {
+        bannerURL =
+            'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg';
+      }
       posterURL = imageBaseURL + detailsResult['poster_path'];
       vote = detailsResult['vote_average'].toString();
       launchOn = detailsResult['release_date'];
@@ -85,30 +90,28 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
 
         } else if ((item['department'] == 'Writing') &&
             (!writerIDs.contains(item['id']))) {
-          print('item is $item');
-          print(item.runtimeType);
-          print('item id is ${item['id']}');
-          print(item['id'].runtimeType);
-
-          print('Item keys: ${item.keys}');
-          print('Item values: ${item.values}');
-
-          print(
-              'Item values contains id 1223895: ${item.values.contains(1223895)}');
-
-          print('writer is ${item['name']} with id ${item['id']}');
-          print(
-              'writerIDs already contains ${item['id']}? ${writerIDs.contains(item['id'])}');
-          if (writerIDs.contains(item['id'])) {
-            print('writerID already added');
-          }
-          // print(
-          //     'writers already contains this name? ${writers.contains(item)}');
           writers.add(item);
-          print('writer ${item['name']} added');
           writerIDs.add(item['id']);
-          print('writerID ${item['id']} added');
-          print('writerIDs: $writerIDs');
+
+          // print('item is $item');
+          // print(item.runtimeType);
+          // print('item id is ${item['id']}');
+          // print(item['id'].runtimeType);
+
+          // print('Item keys: ${item.keys}');
+          // print('Item values: ${item.values}');
+
+          // print(
+          //     'Item values contains id 1223895: ${item.values.contains(1223895)}');
+
+          // print('writer is ${item['name']} with id ${item['id']}');
+          // print(
+          //     'writerIDs already contains ${item['id']}? ${writerIDs.contains(item['id'])}');
+          // // print(
+          // //     'writers already contains this name? ${writers.contains(item)}');
+          // print('writer ${item['name']} added');
+          // print('writerID ${item['id']} added');
+          // print('writerIDs: $writerIDs');
         }
         // print('writers is now: $writers');
       }

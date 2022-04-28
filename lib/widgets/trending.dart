@@ -18,7 +18,7 @@ class TrendingMovies extends StatelessWidget {
             height: 10,
           ),
           SizedBox(
-            height: 270,
+            height: 300,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: trending.length,
