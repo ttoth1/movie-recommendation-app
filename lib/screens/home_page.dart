@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation_app/widgets/my_navbar.dart';
 import 'package:movie_recommendation_app/secrets/secrets.dart';
+import 'package:movie_recommendation_app/widgets/top_rated.dart';
 import 'package:movie_recommendation_app/widgets/trending.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -13,12 +14,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List trendingMovies = [];
+  List topRatedMovies = [];
   final String apiKey = mySecretKey;
   final String readAccessToken = myToken;
 
   @override
   void initState() {
     loadMovies();
+    loadTopMovies();
     super.initState();
   }
 
@@ -36,6 +39,19 @@ class _HomePageState extends State<HomePage> {
     print(trendingMovies);
   }
 
+  loadTopMovies() async {
+    TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
+        logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
+    Map topResult = await tmdbWithCustomLogs.v3.movies.getTopRated();
+    if (mounted) {
+      setState(() {
+        topRatedMovies = topResult['results'];
+      });
+    }
+    print('topRatedMovies');
+    print(topRatedMovies);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +62,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: [
           TrendingMovies(trending: trendingMovies),
+          TopRated(topRated: topRatedMovies),
         ],
       ),
       bottomNavigationBar: const MyNavBar(),

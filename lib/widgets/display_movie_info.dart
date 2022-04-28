@@ -136,17 +136,26 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
                   child: Container(
                     height: 250,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      bannerURL,
-                      fit: BoxFit.cover,
-                    ),
+                    child: bannerURL != ''
+                        ? Image.network(
+                            bannerURL,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            bannerURL =
+                                'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 Positioned(
                   bottom: 10,
                   child: Text(
                     ' Average Rating - ' + vote + ' ⭐',
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        backgroundColor: Colors.black),
                   ),
                 ),
               ],
@@ -157,7 +166,16 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
           ),
           Container(
             padding: EdgeInsets.only(left: 10),
-            child: Text('Release date: ' + launchOn),
+            child: Row(
+              children: [
+                Text('Release date: ' + launchOn),
+                const IconButton(
+                  onPressed: null,
+                  hoverColor: Colors.green,
+                  icon: Icon(Icons.thumb_up),
+                ),
+              ],
+            ),
           ),
           Row(
             children: [
@@ -165,7 +183,14 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
                 margin: EdgeInsets.all(5),
                 height: 200,
                 width: 100,
-                child: Image.network(posterURL),
+                child: posterURL != ''
+                    ? Image.network(
+                        posterURL,
+                      )
+                    : Image.network(
+                        posterURL =
+                            'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg',
+                      ),
               ),
               Flexible(child: Text(description)),
             ],
