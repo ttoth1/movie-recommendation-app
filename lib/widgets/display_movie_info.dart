@@ -24,6 +24,7 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
   late int directorID = 0;
   late LinkedHashMap director = {'': 0, 'a': 0} as LinkedHashMap;
   List writers = [];
+  List writerIDs = [];
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
 
   late String name = '',
@@ -32,12 +33,27 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
       posterURL = '',
       vote = '',
       launchOn = '';
+  late bool likeBool;
+  Color _likeIconColor = Colors.grey;
+  Color _splashLikeColor = Colors.grey;
 
   @override
   void initState() {
     loadDetails();
     loadCast();
     super.initState();
+  }
+
+  toggleLike() async {
+    setState(() {
+      if (_likeIconColor == Colors.grey) {
+        _likeIconColor = Colors.green;
+        _splashLikeColor = Colors.grey;
+      } else {
+        _likeIconColor = Colors.grey;
+        _splashLikeColor = Colors.green;
+      }
+    });
   }
 
   loadDetails() async {
@@ -48,7 +64,12 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
     setState(() {
       name = detailsResult['title'];
       description = detailsResult['overview'];
-      bannerURL = imageBaseURL + detailsResult['backdrop_path'];
+      if (detailsResult['backdrop_path'] != null) {
+        bannerURL = imageBaseURL + detailsResult['backdrop_path'];
+      } else {
+        bannerURL =
+            'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg';
+      }
       posterURL = imageBaseURL + detailsResult['poster_path'];
       vote = detailsResult['vote_average'].toString();
       launchOn = detailsResult['release_date'];
@@ -70,22 +91,47 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
       for (var item in crew) {
         if (item['job'] == 'Director') {
           directorID = item['id'];
-          // print('movie director is ' + item['name']);
-          // print('movie director ID ' + item['id'].toString());
+          print('movie director is ' + item['name']);
+          print('movie director ID ' + item['id'].toString());
           // print("id type is ${item['id'].runtimeType}");
           // print("item name type is ${item['name'].runtimeType}");
-          print(item);
-          print("item type is ${item.runtimeType}");
+          // print(item);
+          // print("item type is ${item.runtimeType}");
           director = item;
-          print("director type is ${director.runtimeType}");
+          // print("director type is ${director.runtimeType}");
+
+          // } else if ((item['department'] == 'Writing') &&
+          //     !writers.contains(item['id'])) {
+
         } else if ((item['department'] == 'Writing') &&
-            !writers.contains(item['id'])) {
-          print('writer is ${item['name']} with id ${item['id']}');
+            (!writerIDs.contains(item['id']))) {
           writers.add(item);
+          writerIDs.add(item['id']);
+
+          // print('item is $item');
+          // print(item.runtimeType);
+          // print('item id is ${item['id']}');
+          // print(item['id'].runtimeType);
+
+          // print('Item keys: ${item.keys}');
+          // print('Item values: ${item.values}');
+
+          // print(
+          //     'Item values contains id 1223895: ${item.values.contains(1223895)}');
+
+          // print('writer is ${item['name']} with id ${item['id']}');
+          // print(
+          //     'writerIDs already contains ${item['id']}? ${writerIDs.contains(item['id'])}');
+          // // print(
+          // //     'writers already contains this name? ${writers.contains(item)}');
+          // print('writer ${item['name']} added');
+          // print('writerID ${item['id']} added');
+          // print('writerIDs: $writerIDs');
         }
+        // print('writers is now: $writers');
       }
     });
-    print("writers: $writers");
+    print("complete writers: $writers");
   }
 
   @override
@@ -105,17 +151,26 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
                   child: Container(
                     height: 250,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      bannerURL,
-                      fit: BoxFit.cover,
-                    ),
+                    child: bannerURL != ''
+                        ? Image.network(
+                            bannerURL,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            bannerURL =
+                                'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 Positioned(
                   bottom: 10,
                   child: Text(
                     ' Average Rating - ' + vote + ' ⭐',
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        backgroundColor: Colors.black),
                   ),
                 ),
               ],
@@ -128,18 +183,34 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
             padding: EdgeInsets.only(left: 10),
             child: Text('Release date: ' + launchOn),
           ),
+          IconButton(
+            icon: const Icon(Icons.thumb_up),
+            color: _likeIconColor,
+            splashColor: _splashLikeColor,
+            tooltip: 'Like this movie',
+            onPressed: () {
+              toggleLike();
+            },
+          ),
           Row(
             children: [
               Container(
                 margin: EdgeInsets.all(5),
                 height: 200,
                 width: 100,
-                child: Image.network(posterURL),
+                child: posterURL != ''
+                    ? Image.network(
+                        posterURL,
+                      )
+                    : Image.network(
+                        posterURL =
+                            'https://ualr.edu/elearning/files/2020/10/No-Photo-Available.jpg',
+                      ),
               ),
               Flexible(child: Text(description)),
             ],
           ),
-          Text(" Movie id: " + widget.movieID.toString()),
+          // Text(" Movie id: " + widget.movieID.toString()),
           Actors(actors: cast),
           Director(
             directorID: directorID,

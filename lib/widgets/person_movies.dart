@@ -18,7 +18,7 @@ class PersonMovies extends StatelessWidget {
             height: 10,
           ),
           SizedBox(
-            height: 270,
+            height: 300,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: movies.length,
@@ -35,15 +35,21 @@ class PersonMovies extends StatelessWidget {
                     width: 140,
                     child: Column(
                       children: [
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(imageBaseURL +
-                                    movies[index]['poster_path'])),
-                          ),
-                        ),
-                        Text(movies[index]['title'])
+                        movies[index]['poster_path'] != null
+                            ? Container(
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(imageBaseURL +
+                                          movies[index]['poster_path'])),
+                                ),
+                              )
+                            : Container(
+                                height: 200,
+                                child: const Text("No photo available"),
+                              ),
+                        Text(
+                            movies[index]['title'] ?? 'error retrieving title'),
                       ],
                     ),
                   ),

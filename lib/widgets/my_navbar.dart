@@ -12,9 +12,9 @@ class MyNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return BottomNavigationBar(
-      selectedItemColor: Colors.red,
+      selectedItemColor: Colors.grey.shade600,
       unselectedItemColor: Colors.grey.shade600,
-      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
       unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
       type: BottomNavigationBarType.fixed,
       onTap: (index) async {
@@ -26,10 +26,6 @@ class MyNavBar extends StatelessWidget {
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => const SearchPage()));
         } else if (index == 2) {
-          print("show saved screen");
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const SavedPage()));
-        } else if (index == 3) {
           print("Trying to logout");
           await authService.signOut();
           Navigator.popUntil(context, ModalRoute.withName('/'));
@@ -43,10 +39,6 @@ class MyNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.person_search),
           label: ("Search"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_box),
-          label: ("Profile"),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.logout),

@@ -6,6 +6,7 @@ import 'package:movie_recommendation_app/screens/register_page.dart';
 import 'package:movie_recommendation_app/screens/saved_page.dart';
 import 'package:movie_recommendation_app/screens/search_page.dart';
 import 'package:movie_recommendation_app/services/auth_service.dart';
+import 'package:movie_recommendation_app/widgets/dismiss_keyboard.dart';
 import 'package:movie_recommendation_app/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -27,18 +28,20 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthService(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Movie Recommendation App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      child: DismissKeyboard(
+        child: MaterialApp(
+          title: 'Movie App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => Wrapper(),
+            '/login': (context) => LoginPage(),
+            '/register': (context) => RegisterPage(),
+          },
         ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => Wrapper(),
-          '/login': (context) => LoginPage(),
-          '/register': (context) => RegisterPage(),
-        },
       ),
     );
   }

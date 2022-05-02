@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_recommendation_app/screens/home_page.dart';
-import 'package:movie_recommendation_app/screens/profile_page.dart';
+import 'package:movie_recommendation_app/widgets/display_movie_info.dart';
 
-class Writers extends StatelessWidget {
-  final List writers;
+class SearchMovies extends StatelessWidget {
+  final List searchList;
   final String imageBaseURL = 'https://image.tmdb.org/t/p/w500';
-  const Writers({Key? key, required this.writers}) : super(key: key);
+  const SearchMovies({Key? key, required this.searchList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,47 +12,42 @@ class Writers extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Text('Writers'),
+          // const Text('Movie Search Results'),
           const SizedBox(
             height: 10,
           ),
           SizedBox(
-            height: 300,
+            height: 270,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: writers.length,
+              itemCount: searchList.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    print('${writers[index]['name']} clicked');
-                    print('${writers[index]['id']} clicked');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfilePage(
-                                  personID: writers[index]['id'],
-                                  personName: writers[index]['name'],
-                                )));
+                            builder: (context) => DisplayMovieInfo(
+                                movieID: searchList[index]['id'])));
                   },
                   child: SizedBox(
                     width: 140,
                     child: Column(
                       children: [
-                        writers[index]['profile_path'] != null
+                        searchList[index]['poster_path'] != null
                             ? Container(
                                 height: 200,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: NetworkImage(imageBaseURL +
-                                          writers[index]['profile_path'])),
+                                          searchList[index]['poster_path'])),
                                 ),
                               )
                             : Container(
                                 height: 200,
                                 child: const Text("No photo available"),
                               ),
-                        Text(writers[index]['name']),
-                        // Text('Writer id: ${writers[index]['id']}'),
+                        Text(searchList[index]['title'])
                       ],
                     ),
                   ),
