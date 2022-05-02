@@ -53,7 +53,7 @@ class Writers extends StatelessWidget {
                                 child: const Text("No photo available"),
                               ),
                         Text(writers[index]['name']),
-                        Text('Writer id: ${writers[index]['id']}'),
+                        // Text('Writer id: ${writers[index]['id']}'),
                       ],
                     ),
                   ),

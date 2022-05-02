@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       child: DismissKeyboard(
         child: MaterialApp(
-          title: 'Movie Recommendation App',
+          title: 'Movie App',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),

@@ -52,7 +52,7 @@ class Director extends StatelessWidget {
                             child: const Text("No photo available"),
                           ),
                     Text(director['name']),
-                    Text('Director id: ${director['id']}'),
+                    // Text('Director id: ${director['id']}'),
                   ],
                 ),
               ),

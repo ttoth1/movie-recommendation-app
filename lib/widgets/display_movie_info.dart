@@ -33,12 +33,27 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
       posterURL = '',
       vote = '',
       launchOn = '';
+  late bool likeBool;
+  Color _likeIconColor = Colors.grey;
+  Color _splashLikeColor = Colors.grey;
 
   @override
   void initState() {
     loadDetails();
     loadCast();
     super.initState();
+  }
+
+  toggleLike() async {
+    setState(() {
+      if (_likeIconColor == Colors.grey) {
+        _likeIconColor = Colors.green;
+        _splashLikeColor = Colors.grey;
+      } else {
+        _likeIconColor = Colors.grey;
+        _splashLikeColor = Colors.green;
+      }
+    });
   }
 
   loadDetails() async {
@@ -166,16 +181,16 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
           ),
           Container(
             padding: EdgeInsets.only(left: 10),
-            child: Row(
-              children: [
-                Text('Release date: ' + launchOn),
-                const IconButton(
-                  onPressed: null,
-                  hoverColor: Colors.green,
-                  icon: Icon(Icons.thumb_up),
-                ),
-              ],
-            ),
+            child: Text('Release date: ' + launchOn),
+          ),
+          IconButton(
+            icon: const Icon(Icons.thumb_up),
+            color: _likeIconColor,
+            splashColor: _splashLikeColor,
+            tooltip: 'Like this movie',
+            onPressed: () {
+              toggleLike();
+            },
           ),
           Row(
             children: [
@@ -195,7 +210,7 @@ class _DisplayMovieInfoState extends State<DisplayMovieInfo> {
               Flexible(child: Text(description)),
             ],
           ),
-          Text(" Movie id: " + widget.movieID.toString()),
+          // Text(" Movie id: " + widget.movieID.toString()),
           Actors(actors: cast),
           Director(
             directorID: directorID,

@@ -56,7 +56,7 @@ class Actors extends StatelessWidget {
                               ),
                         Text(actors[index]['name']),
                         Text(actors[index]['character']),
-                        Text('Actor id: ${actors[index]['id']}'),
+                        // Text('Actor id: ${actors[index]['id']}'),
                       ],
                     ),
                   ),
